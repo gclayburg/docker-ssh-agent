@@ -31,7 +31,8 @@ ARG JENKINS_AGENT_HOME=/home/${user}
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 
 RUN groupadd -g ${gid} ${group} \
-    && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
+    && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}" \
+    && sed -i '1s(^(PATH=/usr/local/openjdk-8/bin:$PATH\n(' /home/jenkins/.bashrc
 
 # setup SSH server
 RUN apt-get update \
